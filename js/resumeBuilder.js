@@ -9,7 +9,7 @@ bio.contacts = {
   "twitter" : "@akashyadav_1992",
   "location" : "Bhiwadi"
 };
-bio.biopic = "images/IMG-20160109-WA0003.jpg";
+bio.biopic = "images/myimg.jpg";
 bio.welcomeMessage = "Its me and all about myself!";
 bio.skills = ["awesomeness","programming","c++","JS"];
 bio.display = function(){
@@ -29,7 +29,12 @@ bio.display = function(){
       $("#header").append(formattedSkill);
     }
   }
-}
+  $("#footerContacts").append(HTMLmobile.replace("%data%",bio.contacts.mobile));
+  $("#footerContacts").append(HTMLemail.replace("%data%",bio.contacts.email));
+  $("#footerContacts").append(HTMLtwitter.replace("%data%",bio.contacts.twitter));
+  $("#footerContacts").append(HTMLgithub.replace("%data%",bio.contacts.github));
+  $("#footerContacts").append(HTMLlocation.replace("%data%",bio.contacts.location));
+};
 bio.display();
 // bio object ends
 
@@ -43,10 +48,9 @@ work.jobs = [
     "location" : "Mysore",
     "description" : "I will join Infosys in January 2017 at Mysore, Karnataka"
   }
-]
+];
 work.display = function(){
   for(var job=0;job<work.jobs.length;job++){
-    console.log("hellooooo");
     $("#workExperience").append(HTMLworkStart);
     var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer).replace("#","https://www.infosys.com/");
     var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
@@ -59,7 +63,7 @@ work.display = function(){
     $(".work-entry:last").append(formattedLocation);
     $(".work-entry:last").append(formattedDescription);
   }
-}
+};
 work.display();
 // work object ends
 
@@ -70,7 +74,7 @@ education.schools = [
     "name" : "UIET Kurukshetra University",
     "location" : "Kurukshetra",
     "degree" : "Bachelor of Technology",
-    "majors" : "CS",
+    "majors" : ["CS"],
     "dates" : "2016",
     "url" : "http://www.uietkuk.org/"
   },
@@ -78,11 +82,11 @@ education.schools = [
     "name" : "Modern Public School",
     "location" : "Bhiwadi",
     "degree" : "Matriculation & Senior Secondary",
-    "majors" : "Physics, Chemistry, Mathematics",
+    "majors" : ["Physics","Chemistry","Mathematics"],
     "dates" : "2011",
     "url" : "http://www.mpssociety.in/"
   }
-]
+];
 education.onlineCourses = [
   {
     "title" : "Front-End web Developer Nanodegree",
@@ -90,25 +94,25 @@ education.onlineCourses = [
     "dates" : "2016",
     "url" : "https://in.udacity.com/"
   }
-]
+];
 education.display = function(){
   for(var school=0;school<education.schools.length;school++){
-    console.log("hellooooo");
     $("#education").append(HTMLschoolStart);
     var formattedName = HTMLschoolName.replace("%data%",education.schools[school].name).replace("#",education.schools[school].url);
     var formattedDegree = HTMLschoolDegree.replace("%data%",education.schools[school].degree);
     var formattedDates = HTMLschoolDates.replace("%data%",education.schools[school].dates);
     var formattedLocation = HTMLschoolLocation.replace("%data%",education.schools[school].location);
-    var formattedMajor = HTMLschoolMajor.replace("%data%",education.schools[school].majors);
     $(".education-entry:last").append(formattedName);
     $(".education-entry:last").append(formattedDegree);
     $(".education-entry:last").append(formattedDates);
     $(".education-entry:last").append(formattedLocation);
-    $(".education-entry:last").append(formattedMajor);
+    for(var major=0;major<education.schools[school].majors.length;major++){
+      var formattedMajor = HTMLschoolMajor.replace("%data%",education.schools[school].majors[major]);
+      $(".education-entry:last").append(formattedMajor);
+    }
   }
-
+  $(".education-entry:last").append(HTMLonlineClasses);
   for(var onlineCourse=0;onlineCourse<education.onlineCourses.length;onlineCourse++){
-    $(".education-entry:last").append(HTMLonlineClasses);
     var formattedTitle = HTMLonlineTitle.replace("%data%",education.onlineCourses[onlineCourse].title).replace("#",education.onlineCourses[onlineCourse].url);
     var formattedSchool = HTMLonlineSchool.replace("%data%",education.onlineCourses[onlineCourse].school);
     var formattedDates = HTMLonlineDates.replace("%data%",education.onlineCourses[onlineCourse].dates);
@@ -118,7 +122,7 @@ education.display = function(){
     $(".education-entry:last").append(formattedDates);
     $(".education-entry:last").append(formattedUrl);
   }
-}
+};
 education.display();
 //education object ends
 
@@ -131,21 +135,22 @@ projects.projects = [
     "description" : "Website of Viraj Enterprises",
     "images" : ["images/projectimage.jpg"]
   }
-]
+];
 projects.display = function(){
   for(var project=0;project<projects.projects.length;project++){
-    console.log("prooooooooooo");
     $("#projects").append(HTMLprojectStart);
     var formattedTitle = HTMLprojectTitle.replace("%data%",projects.projects[project].title).replace("#","www.akashyadav20111992.com");
     var formattedDates = HTMLprojectDates.replace("%data%",projects.projects[project].dates);
     var formattedDescription = HTMLprojectDescription.replace("%data%",projects.projects[project].description);
-    var formattedImages = HTMLprojectImage.replace("%data%",projects.projects[project].images);
     $(".project-entry:last").append(formattedTitle);
     $(".project-entry:last").append(formattedDates);
     $(".project-entry:last").append(formattedDescription);
-    $(".project-entry:last").append(formattedImages);
+    for(var image=0;image<projects.projects[project].images.length;image++){
+      var formattedImages = HTMLprojectImage.replace("%data%",projects.projects[project].images);
+      $(".project-entry:last").append(formattedImages);
+    }
   }
-}
+};
 projects.display();
 //projects object ends
 
@@ -162,8 +167,3 @@ function inName(name){
 }
 $("#main").append(internationalizeButton);
 $("#mapDiv").append(googleMap);
-$("#footerContacts").append(HTMLmobile.replace("%data%",bio.contacts.mobile));
-$("#footerContacts").append(HTMLemail.replace("%data%",bio.contacts.email));
-$("#footerContacts").append(HTMLtwitter.replace("%data%",bio.contacts.twitter));
-$("#footerContacts").append(HTMLgithub.replace("%data%",bio.contacts.github));
-$("#footerContacts").append(HTMLlocation.replace("%data%",bio.contacts.location));
